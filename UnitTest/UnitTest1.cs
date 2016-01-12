@@ -12,10 +12,19 @@ namespace UnitTest
         {
             CS_Bufsup bufsup = new CS_Bufsup();
 
-            #region 対象：コードのみ
+            #region 対象：コードのみ０－０
             bufsup.Clear();
             bufsup.Wbuf = @"This is a Pen.";
             bufsup.Exec();
+
+            Assert.IsFalse(bufsup.Remark);
+            Assert.AreEqual("This is a Pen.", bufsup.Wbuf, "Wbuf[This is a Pen.]");
+            Assert.IsNull(bufsup.Rem);
+            #endregion
+
+            #region 対象：コードのみ０－１
+            bufsup.Clear();
+            bufsup.Exec(@"This is a Pen.");
 
             Assert.IsFalse(bufsup.Remark);
             Assert.AreEqual("This is a Pen.", bufsup.Wbuf, "Wbuf[This is a Pen.]");
