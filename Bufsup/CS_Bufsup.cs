@@ -10,8 +10,12 @@ namespace Bufsup
     public class CS_Bufsup
     {
         #region 共有領域
+        // '16.0103 両側余白情報削除の追加　及び、右側・左側余白処理のコメント化
+/*
         CS_Rskip rskip;             // 右側余白情報を削除
         CS_Lskip lskip;             // 左側余白情報を削除
+*/
+        CS_LRskip lrskip;           // 両側余白情報を削除
 
         private String _wbuf;       // ソース情報
         private Boolean _empty;     // ソース情報有無
@@ -33,6 +37,7 @@ namespace Bufsup
                 else
                 {   // 整形処理を行う
                     // 不要情報削除
+/*
                     if (rskip == null || lskip == null)
                     {   // 未定義？
                         rskip = new CS_Rskip();
@@ -43,6 +48,13 @@ namespace Bufsup
                     lskip.Wbuf = rskip.Wbuf;
                     lskip.Exec();
                     _wbuf = lskip.Wbuf;
+*/
+                    if (lrskip == null)
+                    {   // 未定義？
+                        lrskip = new CS_LRskip();
+                    }
+                    lrskip.Exec(_wbuf);
+                    _wbuf = lrskip.Wbuf;
 
                     // 作業の為の下処理
                     if (_wbuf.Length == 0 || _wbuf == null)
@@ -84,9 +96,11 @@ namespace Bufsup
             _empty = true;
             _rem = null;
             _remark = false;
-
+/*
             rskip = null;
             lskip = null;
+*/
+            lrskip = null;
         }
         #endregion
 
@@ -97,9 +111,11 @@ namespace Bufsup
             _empty = true;
             _rem = null;
             _remark = false;
-
+/*
             rskip = null;
             lskip = null;
+*/
+            lrskip = null;
         }
         public void Exec()
         {   // 構文評価を行う
@@ -109,10 +125,16 @@ namespace Bufsup
                 int _pos;       // 位置情報
                 _rem = null;        // コメント情報初期化
                 Boolean _judge = false;     // Rskip稼働の判断     
+/*
                 if (rskip == null || lskip == null)
                 {
                     rskip = new CS_Rskip();
                     lskip = new CS_Lskip();
+                }
+*/
+                if (lrskip == null)
+                {   // 未定義？
+                    lrskip = new CS_LRskip();
                 }
 
                 do
@@ -183,10 +205,16 @@ namespace Bufsup
                 int _pos;       // 位置情報
                 _rem = null;        // コメント情報初期化
                 Boolean _judge = false;     // Rskip稼働の判断     
+/*
                 if (rskip == null || lskip == null)
                 {
                     rskip = new CS_Rskip();
                     lskip = new CS_Lskip();
+                }
+*/
+                if (lrskip == null)
+                {   // 未定義？
+                    lrskip = new CS_LRskip();
                 }
 
                 do
@@ -275,11 +303,15 @@ namespace Bufsup
         }
         private void Reskip()
         {
+/*
             rskip.Wbuf = _wbuf;
             rskip.Exec();
             lskip.Wbuf = rskip.Wbuf;
             lskip.Exec();
             _wbuf = lskip.Wbuf;
+*/
+            lrskip.Exec(_wbuf);
+            _wbuf = lrskip.Wbuf;
 
         }
 
@@ -293,6 +325,7 @@ namespace Bufsup
             else
             {   // 整形処理を行う
                 // 不要情報削除
+/*
                 if (rskip == null || lskip == null)
                 {   // 未定義？
                     rskip = new CS_Rskip();
@@ -303,6 +336,13 @@ namespace Bufsup
                 lskip.Wbuf = rskip.Wbuf;
                 lskip.Exec();
                 _wbuf = lskip.Wbuf;
+*/
+                if (lrskip == null)
+                {   // 未定義？
+                    lrskip = new CS_LRskip();
+                }
+                lrskip.Exec(_wbuf);
+                _wbuf = lrskip.Wbuf;
 
                 // 作業の為の下処理
                 if (_wbuf.Length == 0 || _wbuf == null)
