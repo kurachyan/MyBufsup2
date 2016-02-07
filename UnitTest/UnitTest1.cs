@@ -165,10 +165,11 @@ namespace UnitTest
             #endregion
 
             #region ソースコード６
-            bufsup.Wbuf = Source[6];
-            bufsup.Exec();
+            bool jflg = bufsup.Remark;
+//            bufsup.Wbuf = Source[6];
+            jflg = bufsup.Exec(jflg, Source[6]);
 
-            Assert.IsFalse(bufsup.Remark);
+            Assert.IsFalse(jflg);
             Assert.AreEqual("}", bufsup.Wbuf, "Wbuf[}]");
             Assert.IsNull(bufsup.Rem);
             #endregion
